@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Prepare to Dice</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.paper.min.css"/>
+	<script src="js/jquery-2.1.3.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script	src="js/preparetodice.js"></script>
+</head>
+<body>
+	<div class="container">
+		<h1>Prepare to Dice</h1>
+
+		<ul class="nav nav-pills">
+			<li role="presentation"><a href="index.html">Home</a></li>
+			<li role="presentation"><a href="setup.html">Setup</a></li>
+			<li role="presentation" class="active"><a href="rolling.html">Rolling</a></li>
+		</ul>
+
+		<br/>
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				Stats
+				<button id="rollStats" class="btn btn-success btn-sm">Roll</button>
+			</div>
+			<div class="panel-body">
+				<span id="statText" />
+			</div>
+		</div>
+
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				Wildcards
+				<button id="rollWildcards" class="btn btn-success btn-sm">Roll</button>
+			</div>
+			<div class="panel-body">
+				<span id="wildcardText" />
+			</div>
+		</div>
+
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				d20
+				<button id="rollD20" class="btn btn-success btn-sm">Roll</button>
+			</div>
+			<div class="panel-body">
+				<span id="d20Text" />
+			</div>
+		</div>
+	</div>
+
+	<script>
+		$("#rollStats").click(function() {
+			var stat = getRandomStat();
+			$("#statText").html("You have to level <b>" + stat + "</b>");
+		});
+
+		$("#rollWildcards").click(function() {
+			var card = getWildCard();
+			$("#wildcardText").html(card);
+		});
+
+		$("#rollD20").click(function() {
+			var roll = rollDice(20);
+			$("#d20Text").html("You rolled <b>" + roll + "</b>");
+		});
+	</script>
+</body>
+</html>
