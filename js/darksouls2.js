@@ -24,31 +24,35 @@ function getRandomStat() {
 function getWildCard() {
 	var roll = rollDice(20);
 	var result = "";
+	
+	console.log("Diceroll: " + roll);
 
 	switch (roll) {
 		case 1: result = "<b>Critical Miss</b>: No Estus, No Humanity healing, No items";
 			break;
 		case 2:
 		case 3:
-		case 4:
-		case 5: result = "<b>The Nudist</b>: No armour";
+		case 4: result = "<b>The Nudist</b>: No armour";
 			break;
+		case 5: 
 		case 6:
-		case 7:
+		case 7: result = "<b>The Miser</b>: Use only starting equipment"
+			break;
 		case 8:
 		case 9:
-		case 10: result = "<b>The Miser</b>: Use only starting equipment"
+		case 10: result = "<b>Well what is it !?</b>: Must taunt the boss when the hp bar appears"
 			break;
 		case 11:
 		case 12:
-		case 13:
-		case 14:
-		case 15: result = "<b>Well what is it !?</b>: Must taunt the boss when the hp bar appears"
+		case 13: result = "<b>Best offence is a good defence</b>: Only use shield";
 			break;
-		case 16:
+		case 14:
+		case 15: 
+		case 16: result = "<b>Use the force!</b>: No HUD";
+			break;
 		case 17:
 		case 18:
-		case 19: result = "<b>Best offence is a good defence</b>: Only use shield";
+		case 19: result = "<b>Queensbury rules</b>: Fists only";
 			break;
 		case 20: result = "<b>No Challenge!</b>";
 			break;
