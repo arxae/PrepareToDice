@@ -1,0 +1,1 @@
+tsc typescript/core.ts typescript/darksouls1.ts typescript/darksouls2.ts -out js/preparetodice.js
