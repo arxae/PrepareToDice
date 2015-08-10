@@ -22,7 +22,7 @@ function getRandomStat() {
 }
 
 function getWildCard() {
-	var roll = rollDice(20);
+	var roll = rollDice(23);
 	var result = "";
 	
 	console.log("Diceroll: " + roll);
@@ -54,7 +54,11 @@ function getWildCard() {
 		case 18:
 		case 19: result = "<b>Queensbury rules</b>: Fists only";
 			break;
-		case 20: result = "<b>No Challenge!</b>";
+		case 20:
+		case 21:
+		case 22: result = "<b>Not the kitchen sink</b>: Use the ladle!";
+			break;
+		case 23: result = "<b>No Challenge!</b>";
 			break;
 	}
 
