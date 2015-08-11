@@ -159,7 +159,8 @@ var DarkSouls2;
         "Petrified Something"
     ];
     // Special Challenges
-    var FashionSoulsChallenge = new Core.Challenge("Fashion Souls", "derrrr", true);
+    // Equip an item x spaces down/up. Description will change depening on chosen result
+    var FashionSoulsChallenge = new Core.Challenge("Fashion Souls", "", true);
     FashionSoulsChallenge.Special = function () {
         var x = Core.Roll(10);
         var dir = chance.pick(["up", "down"]);
@@ -192,7 +193,7 @@ var DarkSouls2;
     function GetRandomChallenge() {
         var challenge = Core.RandomFromArray(Challenges);
         if (challenge.HasSpecial == true) {
-            var result = challenge.Special(null);
+            challenge.Special(null);
         }
         return challenge;
     }
