@@ -28,6 +28,12 @@ module Core {
 	}
 	
 	export class Challenge {
-		constructor(public Name:string, public Description:string) {}
+		Special : Action<void>;
+		
+		constructor(public Name:string, public Description:string, public HasSpecial?:boolean) {}
+	}
+	
+	export interface Action<T> {
+		(item: T) : void;
 	}
 }

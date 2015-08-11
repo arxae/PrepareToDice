@@ -26,9 +26,10 @@ var Core;
     }
     Core.FormatChallengeText = FormatChallengeText;
     var Challenge = (function () {
-        function Challenge(Name, Description) {
+        function Challenge(Name, Description, HasSpecial) {
             this.Name = Name;
             this.Description = Description;
+            this.HasSpecial = HasSpecial;
         }
         return Challenge;
     })();
@@ -157,6 +158,13 @@ var DarkSouls2;
         "Bonfire Ascetic",
         "Petrified Something"
     ];
+    // Special Challenges
+    var FashionSoulsChallenge = new Core.Challenge("Fashion Souls", "derrrr", true);
+    FashionSoulsChallenge.Special = function () {
+        var x = Core.Roll(10);
+        var dir = chance.pick(["up", "down"]);
+        FashionSoulsChallenge.Description = "Take the item in the slot " + x + " spaces " + dir + ".";
+    };
     var Challenges = [
         new Core.Challenge("Critical Miss", "No Estus, no (healing) items"),
         new Core.Challenge("The Nudist", "No armor"),
@@ -166,7 +174,8 @@ var DarkSouls2;
         new Core.Challenge("Use the force!", "No HUD"),
         new Core.Challenge("Queensbury rules", "Fists only"),
         new Core.Challenge("Not the kitchen sink", "Use the Ladle!"),
-        new Core.Challenge("No Challenge", "")
+        new Core.Challenge("No Challenge", ""),
+        FashionSoulsChallenge
     ];
     function GetRandomStat() {
         return Core.RandomFromArray(Stats);
@@ -181,7 +190,11 @@ var DarkSouls2;
     }
     DarkSouls2.GetRandomGift = GetRandomGift;
     function GetRandomChallenge() {
-        return Core.RandomFromArray(Challenges);
+        var challenge = Core.RandomFromArray(Challenges);
+        if (challenge.HasSpecial == true) {
+            var result = challenge.Special(null);
+        }
+        return challenge;
     }
     DarkSouls2.GetRandomChallenge = GetRandomChallenge;
     // Page interactions
@@ -201,8 +214,6 @@ var DarkSouls2;
         });
         $("#rollWildcards").click(function () {
             var challenge = GetRandomChallenge();
-            // var text = Core.MakeBold(challenge.Name);
-            // text = text + ": " + challenge.Description;
             $("#wildcardText").html(Core.FormatChallengeText(challenge));
         });
         $("#rollD20").click(function () {

@@ -35,6 +35,16 @@ module DarkSouls2 {
 		"Petrified Something"
 	];
 	
+	// Special Challenges
+	// Equip an item x spaces down/up. Description will change depening on chosen result
+	var FashionSoulsChallenge = new Core.Challenge("Fashion Souls", "", true);
+	FashionSoulsChallenge.Special = () => {
+		var x = Core.Roll(10);
+		var dir = chance.pick(["up", "down"]);
+		
+		FashionSoulsChallenge.Description = "Take the item in the slot " + x + " spaces " + dir + ".";
+	}
+	
 	var Challenges:Array<Core.Challenge> = [
 		new Core.Challenge("Critical Miss", "No Estus, no (healing) items"),
 		new Core.Challenge("The Nudist", "No armor"),
@@ -44,7 +54,8 @@ module DarkSouls2 {
 		new Core.Challenge("Use the force!", "No HUD"),
 		new Core.Challenge("Queensbury rules", "Fists only"),
 		new Core.Challenge("Not the kitchen sink", "Use the Ladle!"),
-		new Core.Challenge("No Challenge", "")
+		new Core.Challenge("No Challenge", ""),
+		FashionSoulsChallenge
 	];
 	
 	export function GetRandomStat() : string {
@@ -60,7 +71,13 @@ module DarkSouls2 {
 	}
 	
 	export function GetRandomChallenge() : Core.Challenge {
-		return <Core.Challenge>Core.RandomFromArray(Challenges);
+		var challenge = <Core.Challenge>Core.RandomFromArray(Challenges);
+		
+		if(challenge.HasSpecial == true) {
+			challenge.Special(null);
+		}
+		
+		return challenge;
 	}
 	
 	// Page interactions
