@@ -17,6 +17,14 @@ var Core;
         return "<b>" + text + "</b>";
     }
     Core.MakeBold = MakeBold;
+    function FormatChallengeText(chal) {
+        var text = Core.MakeBold(chal.Name);
+        if (chal.Description !== "") {
+            text = text + ": " + chal.Description;
+        }
+        return text;
+    }
+    Core.FormatChallengeText = FormatChallengeText;
     var Challenge = (function () {
         function Challenge(Name, Description) {
             this.Name = Name;
@@ -193,9 +201,9 @@ var DarkSouls2;
         });
         $("#rollWildcards").click(function () {
             var challenge = GetRandomChallenge();
-            var text = Core.MakeBold(challenge.Name);
-            text = text + ": " + challenge.Description;
-            $("#wildcardText").html(text);
+            // var text = Core.MakeBold(challenge.Name);
+            // text = text + ": " + challenge.Description;
+            $("#wildcardText").html(Core.FormatChallengeText(challenge));
         });
         $("#rollD20").click(function () {
             var roll = Core.Roll(20).toString();

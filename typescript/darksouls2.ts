@@ -84,11 +84,7 @@ module DarkSouls2 {
 		
 		$("#rollWildcards").click(function() {
 			var challenge = GetRandomChallenge();
-			
-			var text = Core.MakeBold(challenge.Name);
-			text = text + ": " + challenge.Description;
-			
-			$("#wildcardText").html(text);
+			$("#wildcardText").html(Core.FormatChallengeText(challenge));
 		});
 		
 		$("#rollD20").click(function() {

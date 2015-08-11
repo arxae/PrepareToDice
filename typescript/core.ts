@@ -17,6 +17,16 @@ module Core {
 		return "<b>" + text + "</b>";
 	}
 	
+	export function FormatChallengeText(chal : Challenge) {
+		var text = Core.MakeBold(chal.Name);
+		
+		if(chal.Description !== "") {
+			text = text + ": " + chal.Description;
+		}
+		
+		return text;
+	}
+	
 	export class Challenge {
 		constructor(public Name:string, public Description:string) {}
 	}
