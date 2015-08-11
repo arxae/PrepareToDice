@@ -43,6 +43,7 @@ module DarkSouls2 {
 		new Core.Challenge("Best offence is a good defence", "Only use shield"),
 		new Core.Challenge("Use the force!", "No HUD"),
 		new Core.Challenge("Queensbury rules", "Fists only"),
+		new Core.Challenge("Not the kitchen sink", "Use the Ladle!"),
 		new Core.Challenge("No Challenge", "")
 	];
 	
