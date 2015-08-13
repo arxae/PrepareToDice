@@ -27,6 +27,45 @@ module Core {
 		return text;
 	}
 	
+	export function ShowAlert(_title : string, _description : string) {
+		sweetAlert({
+			title: _title,
+			text: _description,
+			type: "success",
+			animation: "slide-from-top",
+			html: true
+		});
+	}
+	
+	export function ArraySum(arr : Array<number>) : number {
+		if(arr.length === 0) return 0;
+		if(arr.length === 1) return arr[0];
+		
+		var total = 0;
+		arr.forEach(element => {
+			total += element;
+		});
+		
+		return total;
+	}
+	
+	export function ShowChallengeAlert(challenge : Challenge) : Core.Challenge {
+		if(challenge.HasSpecial == true) {
+			challenge.Special(null);
+		}
+		
+		var settings = {
+			title: challenge.Name,
+			text: challenge.Description,
+			type: "success",
+			animation: "slide-from-top"
+		};
+		
+		sweetAlert(settings);
+		
+		return challenge;
+	}
+	
 	export class Challenge {
 		Special : Action<void>;
 		

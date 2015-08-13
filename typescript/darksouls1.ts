@@ -1,5 +1,6 @@
 /// <reference path="core.ts" />
 /// <reference path="definitions/jquery.d.ts" />
+/// <reference path="definitions/sweetalert.d.ts" />
 module DarkSouls1 {
 	var Stats:Array<string> = [
 		"Vitality",
@@ -63,10 +64,14 @@ module DarkSouls1 {
 	}
 	
 	// Page interactions
+	function AddToLog(text : string) {
+		$("#logMainDiv").show(500);
+		$("#rollLog").append(text + "</br>");
+	}
+	
 	$(document).ready(function() {	
 		// Setup Page 
 		$("#continueButton").hide();
-		var hasDoneRoll : boolean = false;
 		
 		$("#setupRoll").click(function() {
 			$("#classText").text(GetRandomClass());
@@ -76,23 +81,55 @@ module DarkSouls1 {
 		});
 	
 		// Rolling Page
-		$("#rollStats").click(function() {
-			var stat = GetRandomStat();
-			$("#statText").html("You have to level " + Core.MakeBold(stat));
+		$("#clearLog").click(function() {
+			$("#rollLog").empty();
+			$("#logMainDiv").hide(500);
 		});
 		
-		$("#rollWildcards").click(function() {
+		$("#rollStatsDS1").click(function() {
+			var stat : string = Core.MakeBold(GetRandomStat());
+			var text = "You have to level " + stat;
+			Core.ShowAlert("You have to level!", stat);
+			$("#statText").html(text);
+			AddToLog(text);;
+		});
+		
+		$("#rollWildcardsDS1").click(function() {
 			var challenge = GetRandomChallenge();
-			
-			var text = Core.MakeBold(challenge.Name);
-			text = text + ": " + challenge.Description;
-			
+			var text = Core.FormatChallengeText(challenge);
+			Core.ShowChallengeAlert(challenge);
 			$("#wildcardText").html(text);
+			AddToLog(text);
 		});
 		
-		$("#rollD20").click(function() {
-			var roll = Core.Roll(20).toString();
-			$("#d20Text").html("You rolled " + Core.MakeBold(roll));
+		$("#rollD20DS1").click(function() {
+			sweetAlert({
+				title: "Roll dice",
+				text: "Enter a #d# dice format. There is no error checking for format yet",
+				type: "input",
+				showCancelButton: true,
+				closeOnConfirm: false,
+				animation: "slide-from-top",
+				inputValue: "1d20"
+			},
+			function(input) {
+				if(input === false) return false;
+				
+				if(input === "") {
+					sweetAlert.showInputError("You need to write something!");
+					return false;
+				}
+				
+				var result : Array<number> = chance.rpg(input.toString());
+				var text : string = result.toString();
+				
+				if(result.length > 1) {
+					text += " (Total: " + Core.ArraySum(result) + ")";
+				}
+				
+				sweetAlert("You rolled...", text, "success");
+				AddToLog("Rolled: " + text);
+			});
 		});
 	});
 }

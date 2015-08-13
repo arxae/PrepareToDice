@@ -25,6 +25,42 @@ var Core;
         return text;
     }
     Core.FormatChallengeText = FormatChallengeText;
+    function ShowAlert(_title, _description) {
+        sweetAlert({
+            title: _title,
+            text: _description,
+            type: "success",
+            animation: "slide-from-top",
+            html: true
+        });
+    }
+    Core.ShowAlert = ShowAlert;
+    function ArraySum(arr) {
+        if (arr.length === 0)
+            return 0;
+        if (arr.length === 1)
+            return arr[0];
+        var total = 0;
+        arr.forEach(function (element) {
+            total += element;
+        });
+        return total;
+    }
+    Core.ArraySum = ArraySum;
+    function ShowChallengeAlert(challenge) {
+        if (challenge.HasSpecial == true) {
+            challenge.Special(null);
+        }
+        var settings = {
+            title: challenge.Name,
+            text: challenge.Description,
+            type: "success",
+            animation: "slide-from-top"
+        };
+        sweetAlert(settings);
+        return challenge;
+    }
+    Core.ShowChallengeAlert = ShowChallengeAlert;
     var Challenge = (function () {
         function Challenge(Name, Description, HasSpecial) {
             this.Name = Name;
@@ -37,6 +73,7 @@ var Core;
 })(Core || (Core = {}));
 /// <reference path="core.ts" />
 /// <reference path="definitions/jquery.d.ts" />
+/// <reference path="definitions/sweetalert.d.ts" />
 var DarkSouls1;
 (function (DarkSouls1) {
     var Stats = [
@@ -97,34 +134,68 @@ var DarkSouls1;
     }
     DarkSouls1.GetRandomChallenge = GetRandomChallenge;
     // Page interactions
+    function AddToLog(text) {
+        $("#logMainDiv").show(500);
+        $("#rollLog").append(text + "</br>");
+    }
     $(document).ready(function () {
         // Setup Page 
         $("#continueButton").hide();
-        var hasDoneRoll = false;
         $("#setupRoll").click(function () {
             $("#classText").text(GetRandomClass());
             $("#giftText").text(GetRandomGift());
             $("#continueButton").show();
         });
         // Rolling Page
-        $("#rollStats").click(function () {
-            var stat = GetRandomStat();
-            $("#statText").html("You have to level " + Core.MakeBold(stat));
+        $("#clearLog").click(function () {
+            $("#rollLog").empty();
+            $("#logMainDiv").hide(500);
         });
-        $("#rollWildcards").click(function () {
+        $("#rollStatsDS1").click(function () {
+            var stat = Core.MakeBold(GetRandomStat());
+            var text = "You have to level " + stat;
+            Core.ShowAlert("You have to level!", stat);
+            $("#statText").html(text);
+            AddToLog(text);
+            ;
+        });
+        $("#rollWildcardsDS1").click(function () {
             var challenge = GetRandomChallenge();
-            var text = Core.MakeBold(challenge.Name);
-            text = text + ": " + challenge.Description;
+            var text = Core.FormatChallengeText(challenge);
+            Core.ShowChallengeAlert(challenge);
             $("#wildcardText").html(text);
+            AddToLog(text);
         });
-        $("#rollD20").click(function () {
-            var roll = Core.Roll(20).toString();
-            $("#d20Text").html("You rolled " + Core.MakeBold(roll));
+        $("#rollD20DS1").click(function () {
+            sweetAlert({
+                title: "Roll dice",
+                text: "Enter a #d# dice format. There is no error checking for format yet",
+                type: "input",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                animation: "slide-from-top",
+                inputValue: "1d20"
+            }, function (input) {
+                if (input === false)
+                    return false;
+                if (input === "") {
+                    sweetAlert.showInputError("You need to write something!");
+                    return false;
+                }
+                var result = chance.rpg(input.toString());
+                var text = result.toString();
+                if (result.length > 1) {
+                    text += " (Total: " + Core.ArraySum(result) + ")";
+                }
+                sweetAlert("You rolled...", text, "success");
+                AddToLog("Rolled: " + text);
+            });
         });
     });
 })(DarkSouls1 || (DarkSouls1 = {}));
 /// <reference path="core.ts" />
 /// <reference path="definitions/jquery.d.ts" />
+/// <reference path="definitions/sweetalert.d.ts" />
 var DarkSouls2;
 (function (DarkSouls2) {
     var Stats = [
@@ -199,27 +270,61 @@ var DarkSouls2;
     }
     DarkSouls2.GetRandomChallenge = GetRandomChallenge;
     // Page interactions
+    function AddToLog(text) {
+        $("#logMainDiv").show(500);
+        $("#rollLog").append(text + "</br>");
+    }
     $(document).ready(function () {
         // Setup Page 
         $("#continueButton").hide();
-        var hasDoneRoll = false;
         $("#setupRoll").click(function () {
             $("#classText").text(GetRandomClass());
             $("#giftText").text(GetRandomGift());
             $("#continueButton").show();
         });
         // Rolling Page
+        $("#clearLog").click(function () {
+            $("#rollLog").empty();
+            $("#logMainDiv").hide(500);
+        });
         $("#rollStats").click(function () {
-            var stat = GetRandomStat();
-            $("#statText").html("You have to level " + Core.MakeBold(stat));
+            var stat = Core.MakeBold(GetRandomStat());
+            var text = "You have to level " + stat;
+            Core.ShowAlert("You have to level!", stat);
+            $("#statText").html(text);
+            AddToLog(text);
         });
         $("#rollWildcards").click(function () {
             var challenge = GetRandomChallenge();
-            $("#wildcardText").html(Core.FormatChallengeText(challenge));
+            var text = Core.FormatChallengeText(challenge);
+            Core.ShowChallengeAlert(challenge);
+            $("#wildcardText").html(text);
+            AddToLog(text);
         });
         $("#rollD20").click(function () {
-            var roll = Core.Roll(20).toString();
-            $("#d20Text").html("You rolled " + Core.MakeBold(roll));
+            sweetAlert({
+                title: "Roll dice",
+                text: "Enter a #d# dice format. There is no error checking for format yet",
+                type: "input",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                animation: "slide-from-top",
+                inputValue: "1d20"
+            }, function (input) {
+                if (input === false)
+                    return false;
+                if (input === "") {
+                    sweetAlert.showInputError("You need to write something!");
+                    return false;
+                }
+                var result = chance.rpg(input.toString());
+                var text = result.toString();
+                if (result.length > 1) {
+                    text += " (Total: " + Core.ArraySum(result) + ")";
+                }
+                sweetAlert("You rolled...", text, "success");
+                AddToLog("Rolled: " + text);
+            });
         });
     });
 })(DarkSouls2 || (DarkSouls2 = {}));
