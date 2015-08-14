@@ -38,7 +38,7 @@ module DarkSouls2 {
 	
 	// Special Challenges
 	// Equip an item x spaces down/up. Description will change depening on chosen result
-	var FashionSoulsChallenge = new Core.Challenge("Fashion Souls", "", true);
+	var FashionSoulsChallenge = new Core.Challenge("Fashion Souls", "", 100, true);
 	FashionSoulsChallenge.Special = () => {
 		var x = Core.Roll(10);
 		var dir = chance.pick(["up", "down"]);
@@ -47,17 +47,19 @@ module DarkSouls2 {
 	}
 	
 	var Challenges:Array<Core.Challenge> = [
-		new Core.Challenge("Critical Miss", "No Estus, no (healing) items"),
-		new Core.Challenge("The Nudist", "No armor"),
-		new Core.Challenge("The Miser", "Only use your starting equipment"),
-		new Core.Challenge("Well what is it?!", "Must taunt the boss when the hp bar appears"),
-		new Core.Challenge("Best offence is a good defence", "Only use shield"),
-		new Core.Challenge("Use the force!", "No HUD"),
-		new Core.Challenge("Queensbury rules", "Fists only"),
-		new Core.Challenge("Not the kitchen sink", "Use the Ladle!"),
-		new Core.Challenge("No Challenge", ""),
+		new Core.Challenge("Critical Miss", "No Estus, no (healing) items", 50),
+		new Core.Challenge("The Nudist", "No armor", 100),
+		new Core.Challenge("The Miser", "Only use your starting equipment", 100),
+		new Core.Challenge("Well what is it?!", "Must taunt the boss when the hp bar appears", 100),
+		new Core.Challenge("Best offence is a good defence", "Only use shield", 100),
+		new Core.Challenge("Use the force!", "No HUD", 100),
+		new Core.Challenge("Queensbury rules", "Fists only", 100),
+		new Core.Challenge("Not the kitchen sink", "Ladle Only!", 100),
+		new Core.Challenge("No Challenge", "", 50),
 		FashionSoulsChallenge
 	];
+	
+	var ChallengeWeights:Array<number>;
 	
 	export function GetRandomStat() : string {
 		return <string>Core.RandomFromArray(Stats);
@@ -72,7 +74,11 @@ module DarkSouls2 {
 	}
 	
 	export function GetRandomChallenge() : Core.Challenge {
-		var challenge = <Core.Challenge>Core.RandomFromArray(Challenges);
+		if(ChallengeWeights === undefined) {
+			ChallengeWeights = Core.CreateWeightArray(Challenges);
+		}
+		
+		var challenge = <Core.Challenge>Core.RandomFromArrayWeighted(Challenges, ChallengeWeights);
 		
 		if(challenge.HasSpecial == true) {
 	 		challenge.Special(null);

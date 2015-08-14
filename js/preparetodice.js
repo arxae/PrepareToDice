@@ -8,11 +8,23 @@ var Core;
         });
     }
     Core.Roll = Roll;
+    // TODO: Move to util module
     function RandomFromArray(arr) {
         return chance.pick(arr);
     }
     Core.RandomFromArray = RandomFromArray;
-    // TODO: Move to util module
+    function RandomFromArrayWeighted(vals, weights) {
+        return chance.weighted(vals, weights);
+    }
+    Core.RandomFromArrayWeighted = RandomFromArrayWeighted;
+    function CreateWeightArray(arr) {
+        var newArr = new Array();
+        arr.forEach(function (element) {
+            newArr.push(element.Weight);
+        });
+        return newArr;
+    }
+    Core.CreateWeightArray = CreateWeightArray;
     function MakeBold(text) {
         return "<b>" + text + "</b>";
     }
@@ -62,9 +74,10 @@ var Core;
     }
     Core.ShowChallengeAlert = ShowChallengeAlert;
     var Challenge = (function () {
-        function Challenge(Name, Description, HasSpecial) {
+        function Challenge(Name, Description, Weight, HasSpecial) {
             this.Name = Name;
             this.Description = Description;
+            this.Weight = Weight;
             this.HasSpecial = HasSpecial;
         }
         return Challenge;
@@ -110,13 +123,14 @@ var DarkSouls1;
         "Old Witch's Ring"
     ];
     var Challenges = [
-        new Core.Challenge("Critical Miss", "No Estus, No Humanity healing, No items"),
-        new Core.Challenge("The Nudist", "No Armor"),
-        new Core.Challenge("The Miser", "Use only your starting equipment"),
-        new Core.Challenge("Well what is it !?", "Must taunt the boss when the hp bar appears"),
-        new Core.Challenge("Best offence is a good defence", "Only use a shield"),
-        new Core.Challenge("No Challenge", "")
+        new Core.Challenge("Critical Miss", "No Estus, No Humanity healing, No items", 50),
+        new Core.Challenge("The Nudist", "No Armor", 100),
+        new Core.Challenge("The Miser", "Use only your starting equipment", 100),
+        new Core.Challenge("Well what is it !?", "Must taunt the boss when the hp bar appears", 100),
+        new Core.Challenge("Best offence is a good defence", "Only use a shield", 100),
+        new Core.Challenge("No Challenge", "", 100)
     ];
+    var ChallengeWeights;
     function GetRandomStat() {
         return Core.RandomFromArray(Stats);
     }
@@ -130,7 +144,14 @@ var DarkSouls1;
     }
     DarkSouls1.GetRandomGift = GetRandomGift;
     function GetRandomChallenge() {
-        return Core.RandomFromArray(Challenges);
+        if (ChallengeWeights === undefined) {
+            ChallengeWeights = Core.CreateWeightArray(Challenges);
+        }
+        var challenge = Core.RandomFromArrayWeighted(Challenges, ChallengeWeights);
+        if (challenge.HasSpecial == true) {
+            challenge.Special(null);
+        }
+        return challenge;
     }
     DarkSouls1.GetRandomChallenge = GetRandomChallenge;
     // Page interactions
@@ -231,24 +252,25 @@ var DarkSouls2;
     ];
     // Special Challenges
     // Equip an item x spaces down/up. Description will change depening on chosen result
-    var FashionSoulsChallenge = new Core.Challenge("Fashion Souls", "", true);
+    var FashionSoulsChallenge = new Core.Challenge("Fashion Souls", "", 100, true);
     FashionSoulsChallenge.Special = function () {
         var x = Core.Roll(10);
         var dir = chance.pick(["up", "down"]);
         FashionSoulsChallenge.Description = "Take the item in the slot " + x + " spaces " + dir + ".";
     };
     var Challenges = [
-        new Core.Challenge("Critical Miss", "No Estus, no (healing) items"),
-        new Core.Challenge("The Nudist", "No armor"),
-        new Core.Challenge("The Miser", "Only use your starting equipment"),
-        new Core.Challenge("Well what is it?!", "Must taunt the boss when the hp bar appears"),
-        new Core.Challenge("Best offence is a good defence", "Only use shield"),
-        new Core.Challenge("Use the force!", "No HUD"),
-        new Core.Challenge("Queensbury rules", "Fists only"),
-        new Core.Challenge("Not the kitchen sink", "Use the Ladle!"),
-        new Core.Challenge("No Challenge", ""),
+        new Core.Challenge("Critical Miss", "No Estus, no (healing) items", 50),
+        new Core.Challenge("The Nudist", "No armor", 100),
+        new Core.Challenge("The Miser", "Only use your starting equipment", 100),
+        new Core.Challenge("Well what is it?!", "Must taunt the boss when the hp bar appears", 100),
+        new Core.Challenge("Best offence is a good defence", "Only use shield", 100),
+        new Core.Challenge("Use the force!", "No HUD", 100),
+        new Core.Challenge("Queensbury rules", "Fists only", 100),
+        new Core.Challenge("Not the kitchen sink", "Ladle Only!", 100),
+        new Core.Challenge("No Challenge", "", 50),
         FashionSoulsChallenge
     ];
+    var ChallengeWeights;
     function GetRandomStat() {
         return Core.RandomFromArray(Stats);
     }
@@ -262,7 +284,10 @@ var DarkSouls2;
     }
     DarkSouls2.GetRandomGift = GetRandomGift;
     function GetRandomChallenge() {
-        var challenge = Core.RandomFromArray(Challenges);
+        if (ChallengeWeights === undefined) {
+            ChallengeWeights = Core.CreateWeightArray(Challenges);
+        }
+        var challenge = Core.RandomFromArrayWeighted(Challenges, ChallengeWeights);
         if (challenge.HasSpecial == true) {
             challenge.Special(null);
         }

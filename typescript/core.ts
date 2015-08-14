@@ -8,11 +8,24 @@ module Core {
 		});
 	}
 	
+	// TODO: Move to util module
 	export function RandomFromArray(arr : Array<Object>) {
 		return chance.pick(arr);
 	}
 	
-	// TODO: Move to util module
+	export function RandomFromArrayWeighted(vals : Array<Object>, weights : Array<number>) {
+		return chance.weighted(vals, weights);
+	}
+	
+	export function CreateWeightArray(arr : Array<Challenge>) {
+		var newArr = new Array<number>();
+		arr.forEach(element => {
+			newArr.push(element.Weight);
+		});
+		
+		return newArr;
+	}
+	
 	export function MakeBold(text : string) {
 		return "<b>" + text + "</b>";
 	}
@@ -69,7 +82,7 @@ module Core {
 	export class Challenge {
 		Special : Action<void>;
 		
-		constructor(public Name:string, public Description:string, public HasSpecial?:boolean) {}
+		constructor(public Name:string, public Description:string, public Weight:number, public HasSpecial?:boolean) {}
 	}
 	
 	export interface Action<T> {

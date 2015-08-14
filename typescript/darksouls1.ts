@@ -39,13 +39,15 @@ module DarkSouls1 {
 	];
 	
 	var Challenges:Array<Core.Challenge> = [
-		new Core.Challenge("Critical Miss", "No Estus, No Humanity healing, No items"),
-		new Core.Challenge("The Nudist", "No Armor"),
-		new Core.Challenge("The Miser", "Use only your starting equipment"),
-		new Core.Challenge("Well what is it !?", "Must taunt the boss when the hp bar appears"),
-		new Core.Challenge("Best offence is a good defence", "Only use a shield"),
-		new Core.Challenge("No Challenge", "")
+		new Core.Challenge("Critical Miss", "No Estus, No Humanity healing, No items", 50),
+		new Core.Challenge("The Nudist", "No Armor", 100),
+		new Core.Challenge("The Miser", "Use only your starting equipment", 100),
+		new Core.Challenge("Well what is it !?", "Must taunt the boss when the hp bar appears", 100),
+		new Core.Challenge("Best offence is a good defence", "Only use a shield", 100),
+		new Core.Challenge("No Challenge", "", 100)
 	];
+	
+	var ChallengeWeights:Array<number>;
 	
 	export function GetRandomStat() : string {
 		return <string>Core.RandomFromArray(Stats);
@@ -60,7 +62,17 @@ module DarkSouls1 {
 	}
 	
 	export function GetRandomChallenge() : Core.Challenge {
-		return <Core.Challenge>Core.RandomFromArray(Challenges);
+		if(ChallengeWeights === undefined) {
+			ChallengeWeights = Core.CreateWeightArray(Challenges);
+		}
+		
+		var challenge = <Core.Challenge>Core.RandomFromArrayWeighted(Challenges, ChallengeWeights);
+		
+		if(challenge.HasSpecial == true) {
+			challenge.Special(null);
+		}
+		
+		return challenge;
 	}
 	
 	// Page interactions
