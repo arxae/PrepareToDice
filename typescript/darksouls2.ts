@@ -53,7 +53,7 @@ module DarkSouls2 {
 		new Core.Challenge("Well what is it?!", "Must taunt the boss when the hp bar appears", 100),
 		new Core.Challenge("Best offence is a good defence", "Only use shield", 100),
 		new Core.Challenge("Use the force!", "No HUD", 100),
-		new Core.Challenge("Queensbury rules", "Fists only", 100),
+		new Core.Challenge("Queensbury rules", "Fists only (Caestus is acceptable)", 100),
 		new Core.Challenge("Not the kitchen sink", "Ladle Only!", 100),
 		new Core.Challenge("No Challenge", "", 50),
 		FashionSoulsChallenge
