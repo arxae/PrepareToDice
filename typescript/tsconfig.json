@@ -1,0 +1,9 @@
+{
+	"compilerOptions": {
+		"out": "js/app.js",
+		"module": "commonjs"
+	},
+	"files": [
+		"src/pageInteraction.ts"
+	]
+}
