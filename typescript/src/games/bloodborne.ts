@@ -3,7 +3,7 @@
 module Games {
 	export class Bloodborne extends Core.SoulsGame {
 		public constructor() {
-			super();
+			super("Bloodborne");
 			
 			this.ImageName = "bloodborne-logo-2.png";
 			

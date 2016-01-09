@@ -3,7 +3,7 @@
 module Games {
 	export class DarkSouls1 extends Core.SoulsGame {
 		public constructor() {
-			super();
+			super("Dark Souls");
 			
 			this.ImageName = "dark-souls-1-logo.png";
 			

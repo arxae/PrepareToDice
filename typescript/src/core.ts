@@ -9,6 +9,7 @@ module Core {
 	}
 	
 	export interface IGame {
+		Name : string;
 		ImageName : string;
 		Stats : Array<string>;
 		Classes : Array<string>;
@@ -45,7 +46,7 @@ module Core {
 		public Gifts : Array<string>;
 		public Challenges : Array<Challenge>;
 		
-		constructor() {
+		constructor(public Name : string) {
 			this.Stats = new Array<string>();
 			this.Classes = new Array<string>();
 			this.Gifts = new Array<string>();

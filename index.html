@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="css/sweetalert.css" />
 	<link rel="stylesheet" href="css/style.css" />
 	<script type="text/javascript" src="js/lib/jquery.min.js"></script>
+	<script type="text/javascript" src="js/lib/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/lib/chance.min.js"></script>
 	<script type="text/javascript" src="js/lib/sweetalert.min.js"></script>
 	<script type="text/javascript" src="js/lib/store.min.js"></script>
@@ -31,6 +32,16 @@
 			</div>
 			
 			<button id="toggleDescription" class="btn btn-default btn-xs">Hide Description</button>
+			<div class="btn-group">
+				<button type="button" class="btn btn-default btn-xs dropdown-toggle" 
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					Tools <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+					<li><a id="viewAllChallengesButton" href="#">View all challenges</a></li>
+					<li><a id="showExtraButtons" href="#">Show extra buttons</a></li>
+				</ul>
+			</div>
 		</div>
 		
 		<br />
@@ -57,7 +68,11 @@
 				<div class="panel-body"> 
 					<button id="rollStats" class="btn btn-success btn-sm">Stats</button> 
 					<button id="rollChallenge" class="btn btn-success btn-sm">Challenge</button> 
-					<button id="rollD20" class="btn btn-success btn-sm">d20</button> 
+					<button id="rollD20" class="btn btn-success btn-sm">d20</button>
+					
+					<span class="_extraButtons">|</span>
+					
+					<button id="checkChallengeButton" class="btn btn-success btn-sm _extraButtons">Check challenge</button>
 				</div> 
 			</div> 
 		</div>

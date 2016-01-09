@@ -3,7 +3,7 @@
 module Games {
 	export class DarkSouls2 extends Core.SoulsGame {
 		public constructor() {
-			super();
+			super("Dark Souls 2");
 			
 			this.ImageName = "dark-souls-2-logo.png";
 			
@@ -43,9 +43,10 @@ module Games {
 			this.AddChallenge("Use the force!", "No HUD", 100);
 			this.AddChallenge("Queensbury rules", "Fists only (Caestus is acceptable)", 100);
 			this.AddChallenge("Not the kitchen sink", "Ladle Only!", 100);
-			this.AddChallenge("No Challenge", "", 50);
+			this.AddChallenge("No Challenge", "Yay :D", 50);
 			
 			var FashionSoulsChallenge = new Core.Challenge("Fashion Souls", "", 100, true);
+			FashionSoulsChallenge.description = "Random armor";
 			FashionSoulsChallenge.Special = () => {
 				var x = Core.Roll(10);
 				var dir = chance.pick(["up", "down"]);

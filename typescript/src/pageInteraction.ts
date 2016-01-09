@@ -6,6 +6,7 @@
 /// <reference path="output.ts" />
 
 var _descriptionVisible;
+var _displayExtraButtons = false;
 
 $(document).ready(function() {
 	// Add used games (use combobox value property as key)
@@ -20,6 +21,11 @@ $(document).ready(function() {
 		ShowDescription();
 	} else {
 		HideDescription(true);
+	}
+	
+	// Hide all the extra buttons by default
+	if(_displayExtraButtons) {
+		$("._extraButtons").hide();
 	}
 	
 	if(store.enabled == false) {
@@ -87,6 +93,44 @@ $(document).ready(function() {
 			sweetAlert("You rolled...", text, "success");
 			Output.Log.WriteLine("Rolled: " + text);
 		});
+	});
+	
+	$("#checkChallengeButton").click(function() {
+		var result = Core.Roll(20);
+		
+		// Default to failed roll
+		var title = "You failed";
+		var description = "Chop chop, try again";
+		
+		if(result >= 18) {
+			title = "No challenge!";
+			description = "Challenge removed!";
+		}
+		
+		Output.Alert.Show(title, description);
+	});
+	
+	$("#viewAllChallengesButton").click(function() {
+		var challenges : Array<Core.Challenge> = getCurrentGame().Challenges;
+		var list : string = "";
+		
+		challenges.forEach(c => {
+			list += c.Name + ": " + c.description + "</br>";
+		});
+		
+		Output.Alert.Show("All challenges for " + getCurrentGame().Name, list);
+	});
+	
+	$("#showExtraButtons").click(function() {
+		if(_displayExtraButtons) {
+			$("._extraButtons").hide();
+			$("#showExtraButtons").html("Show extra buttons");
+			_displayExtraButtons = false;
+		} else {
+			$("._extraButtons").show();
+			$("#showExtraButtons").html("Hide extra buttons");
+			_displayExtraButtons = true;
+		}
 	});
 	
 	function getCurrentGame() : Core.IGame {

@@ -70,7 +70,8 @@ var Core;
     })();
     Core.Challenge = Challenge;
     var SoulsGame = (function () {
-        function SoulsGame() {
+        function SoulsGame(Name) {
+            this.Name = Name;
             this.Stats = new Array();
             this.Classes = new Array();
             this.Gifts = new Array();
@@ -478,7 +479,7 @@ var Games;
     var DarkSouls1 = (function (_super) {
         __extends(DarkSouls1, _super);
         function DarkSouls1() {
-            _super.call(this);
+            _super.call(this, "Dark Souls");
             this.ImageName = "dark-souls-1-logo.png";
             this.AddStat("Vitality");
             this.AddStat("Attunement");
@@ -524,7 +525,7 @@ var Games;
     var DarkSouls2 = (function (_super) {
         __extends(DarkSouls2, _super);
         function DarkSouls2() {
-            _super.call(this);
+            _super.call(this, "Dark Souls 2");
             this.ImageName = "dark-souls-2-logo.png";
             this.AddStat("Vigor");
             this.AddStat("Endurance");
@@ -559,8 +560,9 @@ var Games;
             this.AddChallenge("Use the force!", "No HUD", 100);
             this.AddChallenge("Queensbury rules", "Fists only (Caestus is acceptable)", 100);
             this.AddChallenge("Not the kitchen sink", "Ladle Only!", 100);
-            this.AddChallenge("No Challenge", "", 50);
+            this.AddChallenge("No Challenge", "Yay :D", 50);
             var FashionSoulsChallenge = new Core.Challenge("Fashion Souls", "", 100, true);
+            FashionSoulsChallenge.description = "Random armor";
             FashionSoulsChallenge.Special = function () {
                 var x = Core.Roll(10);
                 var dir = chance.pick(["up", "down"]);
@@ -578,7 +580,7 @@ var Games;
     var Bloodborne = (function (_super) {
         __extends(Bloodborne, _super);
         function Bloodborne() {
-            _super.call(this);
+            _super.call(this, "Bloodborne");
             this.ImageName = "bloodborne-logo-2.png";
             this.AddStat("No support yet");
             this.AddClass("No support yet");
@@ -648,6 +650,7 @@ var Output;
 /// <reference path="games/games.d.ts" />
 /// <reference path="output.ts" />
 var _descriptionVisible;
+var _displayExtraButtons = false;
 $(document).ready(function () {
     // Add used games (use combobox value property as key)
     var games = new collections.Dictionary();
@@ -660,6 +663,10 @@ $(document).ready(function () {
     }
     else {
         HideDescription(true);
+    }
+    // Hide all the extra buttons by default
+    if (_displayExtraButtons) {
+        $("._extraButtons").hide();
     }
     if (store.enabled == false) {
         Output.Alert.ShowWarning("Local Storage", "Can't access local storage, maybe due to private browsing. Some stuff might not be saved");
@@ -715,6 +722,37 @@ $(document).ready(function () {
             sweetAlert("You rolled...", text, "success");
             Output.Log.WriteLine("Rolled: " + text);
         });
+    });
+    $("#checkChallengeButton").click(function () {
+        var result = Core.Roll(20);
+        // Default to failed roll
+        var title = "You failed";
+        var description = "Chop chop, try again";
+        if (result >= 18) {
+            title = "No challenge!";
+            description = "Challenge removed!";
+        }
+        Output.Alert.Show(title, description);
+    });
+    $("#viewAllChallengesButton").click(function () {
+        var challenges = getCurrentGame().Challenges;
+        var list = "";
+        challenges.forEach(function (c) {
+            list += c.Name + ": " + c.description + "</br>";
+        });
+        Output.Alert.Show("All challenges for " + getCurrentGame().Name, list);
+    });
+    $("#showExtraButtons").click(function () {
+        if (_displayExtraButtons) {
+            $("._extraButtons").hide();
+            $("#showExtraButtons").html("Show extra buttons");
+            _displayExtraButtons = false;
+        }
+        else {
+            $("._extraButtons").show();
+            $("#showExtraButtons").html("Hide extra buttons");
+            _displayExtraButtons = true;
+        }
     });
     function getCurrentGame() {
         return games.getValue($("#gameSelection").val());
