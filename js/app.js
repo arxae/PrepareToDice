@@ -59,6 +59,13 @@ var Core;
         });
     }
     Core.Roll = Roll;
+    function RollMinMax(min, max) {
+        return chance.integer({
+            min: min,
+            max: max
+        });
+    }
+    Core.RollMinMax = RollMinMax;
     var Challenge = (function () {
         function Challenge(Name, description, weight, hasSpecial) {
             this.Name = Name;
@@ -562,7 +569,6 @@ var Games;
             this.AddChallenge("Not the kitchen sink", "Ladle Only!", 100);
             this.AddChallenge("No Challenge", "Yay :D", 50);
             var FashionSoulsChallenge = new Core.Challenge("Fashion Souls", "", 100, true);
-            FashionSoulsChallenge.description = "Random armor";
             FashionSoulsChallenge.Special = function () {
                 var x = Core.Roll(10);
                 var dir = chance.pick(["up", "down"]);
@@ -582,9 +588,37 @@ var Games;
         function Bloodborne() {
             _super.call(this, "Bloodborne");
             this.ImageName = "bloodborne-logo-2.png";
-            this.AddStat("No support yet");
-            this.AddClass("No support yet");
-            this.AddChallenge("No support yet", "No support yet", 100);
+            this.AddStat("Strength");
+            this.AddStat("Vitality");
+            this.AddStat("Endurance");
+            this.AddStat("Skill");
+            this.AddStat("Arcane");
+            this.AddStat("Bloodtinge");
+            this.AddClass("Milquetoast");
+            this.AddClass("Lone Survivor");
+            this.AddClass("Troubled Childhood");
+            this.AddClass("Violent Past");
+            this.AddClass("Professional");
+            this.AddClass("Military Veteran");
+            this.AddClass("Noble Scion");
+            this.AddClass("Cruel Fate");
+            this.AddClass("Waste of Skin");
+            this.AddChallenge("Lygophobia", "Fear of Darkness. Blindfolded player", 50);
+            this.AddChallenge("Hemophobia", "Fear of Blood. No bloodvial usage allowed", 100);
+            this.AddChallenge("Isolophobia", "Fear of Isolation. Each player controls half of the controller", 100);
+            this.AddChallenge("Tropophobia", "Fear of Change. Only use starting equipment", 100);
+            this.AddChallenge("Hoplophobia", "Fear of Firearms. Not allowed to use guns", 100);
+            this.AddChallenge("Musculomania", "Obsession with Muscles. Must taunt boss when HP bar appears", 100);
+            this.AddChallenge("Vestiphobia", "Fear of Clothing. Fight boss naked", 100);
+            this.AddChallenge("Cenophobia", "Fear of new Things. Plank shield + 1h untransformed weapon only", 100);
+            this.AddChallenge("No Challenge", "Sometimes, things go better then expected", 100);
+            var CountingChallenge = new Core.Challenge("Arithmomania", "", 100, true);
+            CountingChallenge.Special = function () {
+                var updown = Util.RandomFromArray(["up", "down"]);
+                var start = Core.RollMinMax(100, 999);
+                CountingChallenge.description = "Start counting " + updown + " from " + start + ".";
+            };
+            this.AddChallengeWithObject(CountingChallenge);
         }
         return Bloodborne;
     })(Core.SoulsGame);
@@ -665,7 +699,7 @@ $(document).ready(function () {
         HideDescription(true);
     }
     // Hide all the extra buttons by default
-    if (_displayExtraButtons) {
+    if (_displayExtraButtons == false) {
         $("._extraButtons").hide();
     }
     if (store.enabled == false) {
@@ -673,9 +707,6 @@ $(document).ready(function () {
     }
     $("#gameSelection").change(function () {
         Output.Log.ClearLog();
-        if ($("#gameSelection").val() == "bloodborne") {
-            Output.Alert.ShowWarning("Bloodborne", "Do note that Bloodborne is <b>NOT</b> supported yet!");
-        }
         var g = getCurrentGame();
         $("#gameImage").attr("src", "images/" + g.ImageName);
     });

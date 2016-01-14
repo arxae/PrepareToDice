@@ -24,7 +24,7 @@ $(document).ready(function() {
 	}
 	
 	// Hide all the extra buttons by default
-	if(_displayExtraButtons) {
+	if(_displayExtraButtons == false) {
 		$("._extraButtons").hide();
 	}
 	
@@ -34,10 +34,6 @@ $(document).ready(function() {
 	
 	$("#gameSelection").change(function() {
 		Output.Log.ClearLog();
-		
-		if($("#gameSelection").val() == "bloodborne") {
-			Output.Alert.ShowWarning("Bloodborne", "Do note that Bloodborne is <b>NOT</b> supported yet!");
-		}
 		
 		var g = getCurrentGame();
 		$("#gameImage").attr("src", "images/" + g.ImageName);

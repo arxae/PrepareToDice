@@ -46,7 +46,6 @@ module Games {
 			this.AddChallenge("No Challenge", "Yay :D", 50);
 			
 			var FashionSoulsChallenge = new Core.Challenge("Fashion Souls", "", 100, true);
-			FashionSoulsChallenge.description = "Random armor";
 			FashionSoulsChallenge.Special = () => {
 				var x = Core.Roll(10);
 				var dir = chance.pick(["up", "down"]);

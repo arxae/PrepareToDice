@@ -8,6 +8,13 @@ module Core {
 		});
 	}
 	
+	export function RollMinMax(min : number, max : number) {
+		return chance.integer({
+			min: min,
+			max: max
+		});
+	}
+	
 	export interface IGame {
 		Name : string;
 		ImageName : string;
