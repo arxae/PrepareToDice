@@ -47,6 +47,12 @@ $(document).ready(function() {
 		Output.Log.ClearLog();
 	});
 	
+	$("#rollStart").click(function() {
+		var game = getCurrentGame();
+		
+		Output.Alert.Show("Your starting situation", game.GetRandomStart());
+	});
+	
 	$("#rollStats").click(function() {
 		var game = getCurrentGame();
 		var stat = Util.MakeBold(game.GetRandomStat());

@@ -6,6 +6,7 @@ module Games {
 			super("Bloodborne");
 			
 			this.ImageName = "bloodborne-logo-2.png";
+			this.SupportStartingItem = false;
 			
 			this.AddStat("Strength");
 			this.AddStat("Vitality");

@@ -22,11 +22,13 @@ module Core {
 		Classes : Array<string>;
 		Gifts : Array<string>;
 		Challenges : Array<Core.Challenge>;
+		SupportStartingItem : boolean;
 		
 		AddStat(string);
 		AddClass(string);
 		AddGift(string);
 		
+		GetRandomStart() : string;
 		GetRandomStat() : string;
 		GetRandomClass() : string;
 		GetRandomGift() : string;
@@ -52,6 +54,7 @@ module Core {
 		public Classes : Array<string>;
 		public Gifts : Array<string>;
 		public Challenges : Array<Challenge>;
+		public SupportStartingItem : boolean = true;
 		
 		constructor(public Name : string) {
 			this.Stats = new Array<string>();
@@ -85,6 +88,17 @@ module Core {
 		
 		public AddChallengeWithObject(chal : Challenge) {
 			this.Challenges.push(chal);
+		}
+		
+		public GetRandomStart() : string {
+			var text : string = "Class: ";
+			text += this.GetRandomClass();
+			
+			if(this.SupportStartingItem){
+				text += "</br>Gift: " + this.GetRandomGift();
+			}
+			
+			return text;
 		}
 		
 		public GetRandomStat() : string {

@@ -79,6 +79,7 @@ var Core;
     var SoulsGame = (function () {
         function SoulsGame(Name) {
             this.Name = Name;
+            this.SupportStartingItem = true;
             this.Stats = new Array();
             this.Classes = new Array();
             this.Gifts = new Array();
@@ -104,6 +105,14 @@ var Core;
         };
         SoulsGame.prototype.AddChallengeWithObject = function (chal) {
             this.Challenges.push(chal);
+        };
+        SoulsGame.prototype.GetRandomStart = function () {
+            var text = "Class: ";
+            text += this.GetRandomClass();
+            if (this.SupportStartingItem) {
+                text += "</br>Gift: " + this.GetRandomGift();
+            }
+            return text;
         };
         SoulsGame.prototype.GetRandomStat = function () {
             return Util.RandomFromArray(this.Stats);
@@ -588,6 +597,7 @@ var Games;
         function Bloodborne() {
             _super.call(this, "Bloodborne");
             this.ImageName = "bloodborne-logo-2.png";
+            this.SupportStartingItem = false;
             this.AddStat("Strength");
             this.AddStat("Vitality");
             this.AddStat("Endurance");
@@ -715,6 +725,10 @@ $(document).ready(function () {
     });
     $("#clearLog").click(function () {
         Output.Log.ClearLog();
+    });
+    $("#rollStart").click(function () {
+        var game = getCurrentGame();
+        Output.Alert.Show("Your starting situation", game.GetRandomStart());
     });
     $("#rollStats").click(function () {
         var game = getCurrentGame();
