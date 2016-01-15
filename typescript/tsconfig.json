@@ -1,7 +1,9 @@
 {
 	"compilerOptions": {
-		"target": "ES5",
-		"listFiles": true,
-		"out": "js/preparetodice.js"
-	}
+		"out": "js/app.js",
+		"module": "commonjs"
+	},
+	"files": [
+		"src/pageInteraction.ts"
+	]
 }
