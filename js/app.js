@@ -592,6 +592,23 @@ var Games;
 /// <reference path="../core.ts" />
 var Games;
 (function (Games) {
+    var DarkSouls3 = (function (_super) {
+        __extends(DarkSouls3, _super);
+        function DarkSouls3() {
+            _super.call(this, "Dark Souls 3");
+            this.ImageName = "dark-souls-3-logo.png";
+            this.AddStat("None");
+            this.AddClass("None");
+            this.AddGift("None");
+            this.AddChallenge("No support yet", "No support yet", 100);
+        }
+        return DarkSouls3;
+    })(Core.SoulsGame);
+    Games.DarkSouls3 = DarkSouls3;
+})(Games || (Games = {}));
+/// <reference path="../core.ts" />
+var Games;
+(function (Games) {
     var Bloodborne = (function (_super) {
         __extends(Bloodborne, _super);
         function Bloodborne() {
@@ -700,6 +717,7 @@ $(document).ready(function () {
     var games = new collections.Dictionary();
     games.setValue("darksouls1", new Games.DarkSouls1());
     games.setValue("darksouls2", new Games.DarkSouls2());
+    games.setValue("darksouls3", new Games.DarkSouls3());
     games.setValue("bloodborne", new Games.Bloodborne());
     var _descriptionVisible = store.get("preparetodice_description_visbility");
     if (_descriptionVisible) {
@@ -718,6 +736,9 @@ $(document).ready(function () {
     $("#gameSelection").change(function () {
         Output.Log.ClearLog();
         var g = getCurrentGame();
+        if (g.Name == "Dark Souls 3") {
+            Output.Alert.ShowWarning("Dark Souls 3", "No full support for Dark Souls 3 yet");
+        }
         $("#gameImage").attr("src", "images/" + g.ImageName);
     });
     $("#toggleDescription").click(function () {

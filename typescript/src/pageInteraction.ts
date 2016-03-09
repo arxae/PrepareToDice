@@ -13,6 +13,7 @@ $(document).ready(function() {
 	var games = new collections.Dictionary<string, Core.IGame>();
 	games.setValue("darksouls1", new Games.DarkSouls1());
 	games.setValue("darksouls2", new Games.DarkSouls2());
+	games.setValue("darksouls3", new Games.DarkSouls3());
 	games.setValue("bloodborne", new Games.Bloodborne());
 	
 	var _descriptionVisible = store.get("preparetodice_description_visbility");
@@ -36,6 +37,11 @@ $(document).ready(function() {
 		Output.Log.ClearLog();
 		
 		var g = getCurrentGame();
+		
+		if(g.Name=="Dark Souls 3") {
+			Output.Alert.ShowWarning("Dark Souls 3", "No full support for Dark Souls 3 yet");
+		}
+		
 		$("#gameImage").attr("src", "images/" + g.ImageName);
 	});
 	
