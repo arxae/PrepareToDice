@@ -1,3 +1,8 @@
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 /// <reference path="../typings/defs.d.ts" />
 var Util;
 (function (Util) {
@@ -74,7 +79,7 @@ var Core;
             this.hasSpecial = hasSpecial;
         }
         return Challenge;
-    })();
+    }());
     Core.Challenge = Challenge;
     var SoulsGame = (function () {
         function SoulsGame(Name) {
@@ -86,17 +91,17 @@ var Core;
             this.Challenges = new Array();
         }
         SoulsGame.prototype.AddStat = function (stat) {
-            if (this.Stats.indexOf(stat) == -1) {
+            if (this.Stats.indexOf(stat) === -1) {
                 this.Stats.push(stat);
             }
         };
         SoulsGame.prototype.AddClass = function (cls) {
-            if (this.Classes.indexOf(cls) == -1) {
+            if (this.Classes.indexOf(cls) === -1) {
                 this.Classes.push(cls);
             }
         };
         SoulsGame.prototype.AddGift = function (gift) {
-            if (this.Gifts.indexOf(gift) == -1) {
+            if (this.Gifts.indexOf(gift) === -1) {
                 this.Gifts.push(gift);
             }
         };
@@ -124,15 +129,15 @@ var Core;
             return Util.RandomFromArray(this.Gifts);
         };
         SoulsGame.prototype.GetChallenge = function () {
-            //return <Challenge>Util.RandomFromArray(this.Challenges);
             return Util.RandomFromWeightedArray(this.Challenges, Util.CreateWeightedArray(this.Challenges));
         };
         return SoulsGame;
-    })();
+    }());
     Core.SoulsGame = SoulsGame;
 })(Core || (Core = {}));
 // Original code by Basarat (https://github.com/basarat)
 // Code originally from https://github.com/basarat/typescript-collections
+/* tslint:disable */
 var collections;
 (function (collections) {
     var _hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -481,15 +486,10 @@ var collections;
             return toret + "\n}";
         };
         return Dictionary;
-    })();
+    }());
     collections.Dictionary = Dictionary; // End of dictionary
 })(collections || (collections = {})); // End of module
 /// <reference path="../core.ts" />
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
 var Games;
 (function (Games) {
     var DarkSouls1 = (function (_super) {
@@ -532,7 +532,7 @@ var Games;
             this.AddChallenge("No Challenge", "Yay! :D", 100);
         }
         return DarkSouls1;
-    })(Core.SoulsGame);
+    }(Core.SoulsGame));
     Games.DarkSouls1 = DarkSouls1;
 })(Games || (Games = {}));
 /// <reference path="../core.ts" />
@@ -586,7 +586,7 @@ var Games;
             this.AddChallengeWithObject(FashionSoulsChallenge);
         }
         return DarkSouls2;
-    })(Core.SoulsGame);
+    }(Core.SoulsGame));
     Games.DarkSouls2 = DarkSouls2;
 })(Games || (Games = {}));
 /// <reference path="../core.ts" />
@@ -603,7 +603,7 @@ var Games;
             this.AddChallenge("No support yet", "No support yet", 100);
         }
         return DarkSouls3;
-    })(Core.SoulsGame);
+    }(Core.SoulsGame));
     Games.DarkSouls3 = DarkSouls3;
 })(Games || (Games = {}));
 /// <reference path="../core.ts" />
@@ -648,7 +648,7 @@ var Games;
             this.AddChallengeWithObject(CountingChallenge);
         }
         return Bloodborne;
-    })(Core.SoulsGame);
+    }(Core.SoulsGame));
     Games.Bloodborne = Bloodborne;
 })(Games || (Games = {}));
 /// <reference path="../typings/defs.d.ts" />
@@ -667,6 +667,9 @@ var Output;
         }
         Log.ClearLog = ClearLog;
     })(Log = Output.Log || (Output.Log = {}));
+})(Output || (Output = {}));
+var Output;
+(function (Output) {
     var Alert;
     (function (Alert) {
         function Show(title, description) {
@@ -690,7 +693,7 @@ var Output;
         }
         Alert.ShowWarning = ShowWarning;
         function ShowChallengeAlert(challenge) {
-            if (challenge.hasSpecial == true) {
+            if (challenge.hasSpecial === true) {
                 challenge.Special(null);
             }
             var settings = {
@@ -727,16 +730,16 @@ $(document).ready(function () {
         HideDescription(true);
     }
     // Hide all the extra buttons by default
-    if (_displayExtraButtons == false) {
+    if (_displayExtraButtons === false) {
         $("._extraButtons").hide();
     }
-    if (store.enabled == false) {
+    if (store.enabled === false) {
         Output.Alert.ShowWarning("Local Storage", "Can't access local storage, maybe due to private browsing. Some stuff might not be saved");
     }
     $("#gameSelection").change(function () {
         Output.Log.ClearLog();
         var g = getCurrentGame();
-        if (g.Name == "Dark Souls 3") {
+        if (g.Name === "Dark Souls 3") {
             Output.Alert.ShowWarning("Dark Souls 3", "No full support for Dark Souls 3 yet");
         }
         $("#gameImage").attr("src", "images/" + g.ImageName);
@@ -839,7 +842,7 @@ $(document).ready(function () {
     }
     function HideDescription(instant) {
         $("#toggleDescription").html("Show Description");
-        if (instant == true) {
+        if (instant === true) {
             $("#introText").hide(0);
         }
         else {

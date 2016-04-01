@@ -1,6 +1,6 @@
 // Original code by Basarat (https://github.com/basarat)
 // Code originally from https://github.com/basarat/typescript-collections
-
+/* tslint:disable */
 module collections {
     var _hasOwnProperty = Object.prototype.hasOwnProperty;
     var has = function(obj: any, prop: any) {
