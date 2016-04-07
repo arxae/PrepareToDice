@@ -6,6 +6,7 @@ namespace Games {
 			super("Bloodborne");
 
 			this.ImageName = "bloodborne-logo-2.png";
+			this.BackgroundName = "bloodborne-bg.jpg";
 			this.SupportStartingItem = false;
 
 			this.AddStat("Strength");

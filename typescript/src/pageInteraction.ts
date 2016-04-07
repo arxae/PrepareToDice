@@ -38,7 +38,11 @@ $(document).ready(function() {
 		let g = getCurrentGame();
 
 		$("#gameImage").attr("src", "images/" + g.ImageName);
+		$("body").css("background-image", "url('images/" + g.BackgroundName + "')");
 	});
+
+	// Set the background of dark souls 1
+	$("body").css("background-image", "url('images/" + getCurrentGame().BackgroundName + "')");
 
 	$("#toggleDescription").click(function() {
 		ToggleDescription();

@@ -497,6 +497,7 @@ var Games;
         function DarkSouls1() {
             _super.call(this, "Dark Souls");
             this.ImageName = "dark-souls-1-logo.png";
+            this.BackgroundName = "dark-souls-1-bg.jpg";
             this.AddStat("Vitality");
             this.AddStat("Attunement");
             this.AddStat("Endurance");
@@ -543,6 +544,7 @@ var Games;
         function DarkSouls2() {
             _super.call(this, "Dark Souls 2");
             this.ImageName = "dark-souls-2-logo.png";
+            this.BackgroundName = "dark-souls-2-bg.jpg";
             this.AddStat("Vigor");
             this.AddStat("Endurance");
             this.AddStat("Vitality");
@@ -597,6 +599,7 @@ var Games;
         function DarkSouls3() {
             _super.call(this, "Dark Souls 3");
             this.ImageName = "dark-souls-3-logo.png";
+            this.BackgroundName = "dark-souls-3-bg.jpg";
             this.AddStat("Vigor");
             this.AddStat("Attunement");
             this.AddStat("Endurance");
@@ -656,6 +659,7 @@ var Games;
         function Bloodborne() {
             _super.call(this, "Bloodborne");
             this.ImageName = "bloodborne-logo-2.png";
+            this.BackgroundName = "bloodborne-bg.jpg";
             this.SupportStartingItem = false;
             this.AddStat("Strength");
             this.AddStat("Vitality");
@@ -782,7 +786,10 @@ $(document).ready(function () {
         Output.Log.ClearLog();
         var g = getCurrentGame();
         $("#gameImage").attr("src", "images/" + g.ImageName);
+        $("body").css("background-image", "url('images/" + g.BackgroundName + "')");
     });
+    // Set the background of dark souls 1
+    $("body").css("background-image", "url('images/" + getCurrentGame().BackgroundName + "')");
     $("#toggleDescription").click(function () {
         ToggleDescription();
     });

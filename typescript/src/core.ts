@@ -18,6 +18,7 @@ namespace Core {
 	export interface IGame {
 		Name: string;
 		ImageName: string;
+		BackgroundName: string;
 		Stats: Array<string>;
 		Classes: Array<string>;
 		Gifts: Array<string>;
@@ -50,6 +51,7 @@ namespace Core {
 
 	export class SoulsGame implements Core.IGame {
 		public ImageName: string;
+		public BackgroundName: string;
 		public Stats: Array<string>;
 		public Classes: Array<string>;
 		public Gifts: Array<string>;

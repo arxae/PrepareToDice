@@ -6,6 +6,7 @@ namespace Games {
 			super("Dark Souls");
 
 			this.ImageName = "dark-souls-1-logo.png";
+			this.BackgroundName = "dark-souls-1-bg.jpg";
 
 			this.AddStat("Vitality");
 			this.AddStat("Attunement");
