@@ -35,12 +35,7 @@ $(document).ready(function() {
 
 	$("#gameSelection").change(function() {
 		Output.Log.ClearLog();
-
 		let g = getCurrentGame();
-
-		if (g.Name === "Dark Souls 3") {
-			Output.Alert.ShowWarning("Dark Souls 3", "No full support for Dark Souls 3 yet");
-		}
 
 		$("#gameImage").attr("src", "images/" + g.ImageName);
 	});
