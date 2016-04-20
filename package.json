@@ -1,0 +1,22 @@
+{
+  "name": "preparetodice",
+  "version": "1.0.0",
+  "description": "A quick dice roller for the Prepare to Dice challenge",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arxae/preparetodice.git"
+  },
+  "author": "Arxae",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/arxae/preparetodice/issues"
+  },
+  "homepage": "https://github.com/arxae/preparetodice#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-minify": "0.0.9",
+    "gulp-typescript": "^2.13.0",
+    "gulp-uglify": "^1.5.3",
+    "run-sequence": "^1.1.5"
+  }
+}

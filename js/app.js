@@ -489,6 +489,63 @@ var collections;
     }());
     collections.Dictionary = Dictionary; // End of dictionary
 })(collections || (collections = {})); // End of module
+/// <reference path="../typings/defs.d.ts" />
+var Output;
+(function (Output) {
+    var Log;
+    (function (Log) {
+        function WriteLine(line) {
+            $("#logMainDiv").show(500);
+            $("#rollLog").append(line + "</br>");
+        }
+        Log.WriteLine = WriteLine;
+        function ClearLog() {
+            $("#rollLog").empty();
+            $("#logMainDiv").hide(500);
+        }
+        Log.ClearLog = ClearLog;
+    })(Log = Output.Log || (Output.Log = {}));
+})(Output || (Output = {}));
+var Output;
+(function (Output) {
+    var Alert;
+    (function (Alert) {
+        function Show(title, description) {
+            sweetAlert({
+                title: title,
+                text: description,
+                type: "success",
+                animation: "slide-from-top",
+                html: true
+            });
+        }
+        Alert.Show = Show;
+        function ShowWarning(title, description) {
+            sweetAlert({
+                title: title,
+                text: description,
+                type: "warning",
+                animation: "slide-from-top",
+                html: true
+            });
+        }
+        Alert.ShowWarning = ShowWarning;
+        function ShowChallengeAlert(challenge) {
+            if (challenge.hasSpecial === true) {
+                challenge.Special(null);
+            }
+            var settings = {
+                title: challenge.Name,
+                text: challenge.description,
+                type: "success",
+                animation: "slide-from-top"
+            };
+            sweetAlert(settings);
+            return challenge;
+        }
+        Alert.ShowChallengeAlert = ShowChallengeAlert;
+    })(Alert = Output.Alert || (Output.Alert = {}));
+})(Output || (Output = {}));
 /// <reference path="../core.ts" />
 var Games;
 (function (Games) {
@@ -697,63 +754,6 @@ var Games;
     }(Core.SoulsGame));
     Games.Bloodborne = Bloodborne;
 })(Games || (Games = {}));
-/// <reference path="../typings/defs.d.ts" />
-var Output;
-(function (Output) {
-    var Log;
-    (function (Log) {
-        function WriteLine(line) {
-            $("#logMainDiv").show(500);
-            $("#rollLog").append(line + "</br>");
-        }
-        Log.WriteLine = WriteLine;
-        function ClearLog() {
-            $("#rollLog").empty();
-            $("#logMainDiv").hide(500);
-        }
-        Log.ClearLog = ClearLog;
-    })(Log = Output.Log || (Output.Log = {}));
-})(Output || (Output = {}));
-var Output;
-(function (Output) {
-    var Alert;
-    (function (Alert) {
-        function Show(title, description) {
-            sweetAlert({
-                title: title,
-                text: description,
-                type: "success",
-                animation: "slide-from-top",
-                html: true
-            });
-        }
-        Alert.Show = Show;
-        function ShowWarning(title, description) {
-            sweetAlert({
-                title: title,
-                text: description,
-                type: "warning",
-                animation: "slide-from-top",
-                html: true
-            });
-        }
-        Alert.ShowWarning = ShowWarning;
-        function ShowChallengeAlert(challenge) {
-            if (challenge.hasSpecial === true) {
-                challenge.Special(null);
-            }
-            var settings = {
-                title: challenge.Name,
-                text: challenge.description,
-                type: "success",
-                animation: "slide-from-top"
-            };
-            sweetAlert(settings);
-            return challenge;
-        }
-        Alert.ShowChallengeAlert = ShowChallengeAlert;
-    })(Alert = Output.Alert || (Output.Alert = {}));
-})(Output || (Output = {}));
 /// <reference path="../typings/defs.d.ts" />
 /// <reference path="core.ts" />
 /// <reference path="dictionary.ts" />
